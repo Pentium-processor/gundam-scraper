@@ -3,10 +3,12 @@ from rich.console import Console
 from rich.table import Table
 import requests
 import os
+import platform
 console=Console()
+current_dir=os.getcwd()
 mech_info={}
 mechanical_designers=[]
-def file_content_reader(): 
+def file_content_reader():
          console.print("[bold][green]Mobile gundam list:\n\t")
          if os.listdir()==[]:
             print("You have no log files about any mobile suit in the directory gundam_txt_files.")
@@ -23,9 +25,9 @@ def file_content_reader():
            console.print("[red][bold] file does not exist")
 capital_letters=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-if os.path.exists("gundam_txt_files")!=True:
- os.mkdir("gundam_txt_files")
-else:
+if os.path.exists("gundam_txt_files")==False:
+  os.mkdir("gundam_txt_files")
+elif os.path.exists("gundam_txt_files")==True:
   mobile_suit=console.input("[green] do you want to see the information of a mobile suit you searched up before?:")
   if mobile_suit=="y":
    os.chdir("gundam_txt_files")
@@ -39,12 +41,12 @@ else:
       url=console.input("[cyan][bold] URL:")
       while url.startswith("https://gundam.fandom")!=True or len(url)>2000 or url.startswith("https://")!=True and len(url)>2000:
        console.print("Invalid url please try again")
-       url=console.input("[red][bold] URL:") 
+       url=console.input("[red][bold] URL:")
       else:
        payload={"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
       r=requests.get(url,data=payload)
       if os.path.exists("mech_designers.html")!=True:
-       os.chdir(r"C:\Users\natal\.vscode") #Use home dir
+       os.chdir(current_dir)
       with open("mech_designers.html","a",encoding="UTF-8")as mech_design:
         response=requests.get("https://gundam.fandom.com/wiki/Category:Mechanical_Designers")
         mech_design.write(str(response.text))
@@ -70,9 +72,9 @@ else:
       for heading in info_extractor.find_all("dt"):
        armanents.append(heading.string)
 
-        
+
       set_armanents=set(armanents)
-    
+
       mech_info["Armanents"]=list(set_armanents)
       for ms_type in info_extractor.find_all("p"):
        white_space_remover=str(ms_type.string).strip()
@@ -140,4 +142,4 @@ else:
           for key,value in mech_info.items():
             a.write("{d} - {e}".format(d=key,e=value)+"\n")
         else:
-           pass
+          pass 
