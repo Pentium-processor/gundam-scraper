@@ -3,7 +3,6 @@ from rich.console import Console
 from rich.table import Table
 import requests
 import os
-import platform
 console=Console()
 current_dir=os.getcwd()
 mech_info={}
