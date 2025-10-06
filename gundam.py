@@ -3,6 +3,10 @@ from rich.console import Console
 from rich.table import Table
 import requests
 import os
+numbers=[x for x in range(15,20,1)]
+strnumbers=[]
+for n in numbers:
+    strnumbers.append(str(n))
 console=Console()
 current_dir=os.getcwd()
 mech_info={}
@@ -49,6 +53,7 @@ elif os.path.exists("gundam_txt_files")==True:
       with open("mech_designers.html","a",encoding="UTF-8")as mech_design:
         response=requests.get("https://gundam.fandom.com/wiki/Category:Mechanical_Designers")
         mech_design.write(str(response.text))
+
       if r.status_code==200:
        file_name="{html_file_name}.html".format(html_file_name=url[url.index("i/")+2:])
       else:
@@ -66,6 +71,8 @@ elif os.path.exists("gundam_txt_files")==True:
       else:
        del mechanical_designers[0]
       mechanical_designers.append("Kaneko Tsukasa")
+      set_of_mechanical_designers=set(mechanical_designers)
+      convert_to_list=list(set_of_mechanical_designers)
       armanents=[]
       MS_name=info_extractor.title.string[:info_extractor.title.string.index("|")]
       for heading in info_extractor.find_all("dt"):
@@ -88,7 +95,7 @@ elif os.path.exists("gundam_txt_files")==True:
         power_reactor=s.strip()
         mech_info["Power Reactor"]=power_reactor
        else:
-          for mech in mechanical_designers:
+          for mech in convert_to_list:
              if s==mech:
                 mechanical_designer=s.strip()
                 mech_info["Mechanical Designer"]=mechanical_designer
@@ -101,7 +108,7 @@ elif os.path.exists("gundam_txt_files")==True:
               power_reactor=s.strip()
               mech_info["Power Reactor"]=power_reactor
         for b in info_extractor.find_all("span"):
-           if str(b.string).endswith("meters")==True:
+           if str(b.string).endswith("meters")==True and float(b.string[:b.string.index("meters")]) in range(15,21,1):
               overall_height=b.string
               mech_info["Overall Height"]=overall_height
         dnx=[]
@@ -141,4 +148,4 @@ elif os.path.exists("gundam_txt_files")==True:
           for key,value in mech_info.items():
             a.write("{d} - {e}".format(d=key,e=value)+"\n")
         else:
-          pass 
+          pass
