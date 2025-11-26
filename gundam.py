@@ -72,7 +72,9 @@ elif os.path.exists("gundam_txt_files")==True:
        del mechanical_designers[0]
       mechanical_designers.append("Kaneko Tsukasa")
       set_of_mechanical_designers=set(mechanical_designers)
+      print(set_of_mechanical_designers)
       convert_to_list=list(set_of_mechanical_designers)
+      convert_to_list.remove("Skip to content")
       armanents=[]
       MS_name=info_extractor.title.string[:info_extractor.title.string.index("|")]
       for heading in info_extractor.find_all("dt"):
