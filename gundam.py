@@ -3,6 +3,7 @@ from rich.console import Console
 from rich.table import Table
 import requests
 import os
+import platform
 numbers=[x for x in range(15,20,1)]
 strnumbers=[]
 for n in numbers:
@@ -11,6 +12,12 @@ console=Console()
 current_dir=os.getcwd()
 mech_info={}
 mechanical_designers=[]
+def clear_screen():
+   if str(platform.platform()).startswith("Linux")==True:
+      os.system("clear")
+   else:
+      os.system("cls")
+
 def file_content_reader():
          console.print("[bold][green]Mobile gundam list:\n\t")
          if os.listdir()==[]:
@@ -21,7 +28,7 @@ def file_content_reader():
           enter_file=input("file name:")
           if os.path.exists(enter_file)==True:
            read_txt_file=open(enter_file,"r")
-           os.system("cls")
+           clear_screen()
            for text in read_txt_file.readlines():
                print("".join(text))
           else:
@@ -38,7 +45,7 @@ elif os.path.exists("gundam_txt_files")==True:
   else:
     quit_program_input=console.input("[red][bold] do you wish to quit the program?:")
     if quit_program_input=="y" or quit_program_input=="Y":
-       os.system("cls")
+       clear_screen()
        quit("")
     elif quit_program_input=="n" or quit_program_input=="N":
       url=console.input("[cyan][bold] URL:")
@@ -73,15 +80,12 @@ elif os.path.exists("gundam_txt_files")==True:
       mechanical_designers.append("Kaneko Tsukasa")
       set_of_mechanical_designers=set(mechanical_designers)
       convert_to_list=list(set_of_mechanical_designers)
-      convert_to_list.remove("Skip to content")
       armanents=[]
       MS_name=info_extractor.title.string[:info_extractor.title.string.index("|")]
       for heading in info_extractor.find_all("dt"):
-       armanents.append(heading.string)
-
+        armanents.append(heading.string)
 
       set_armanents=set(armanents)
-
       mech_info["Armanents"]=list(set_armanents)
       for ms_type in info_extractor.find_all("p"):
        white_space_remover=str(ms_type.string).strip()
@@ -150,3 +154,8 @@ elif os.path.exists("gundam_txt_files")==True:
             a.write("{d} - {e}".format(d=key,e=value)+"\n")
         else:
           pass
+        for filename in os.listdir():
+            if filename.endswith(".html"):
+               os.remove(filename)
+            else:
+                continue
