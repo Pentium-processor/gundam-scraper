@@ -54,7 +54,7 @@ elif os.path.exists("gundam_txt_files")==True:
        url=console.input("[red][bold] URL:")
       else:
        payload={"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
-      r=requests.get(url,data=payload)
+       r=requests.get(url,data=payload)
       if os.path.exists("mech_designers.html")!=True:
        os.chdir(current_dir)
       with open("mech_designers.html","a",encoding="UTF-8")as mech_design:
@@ -146,16 +146,17 @@ elif os.path.exists("gundam_txt_files")==True:
         create_table()
         open_html_file.close()
         save_ms_data=console.input(f"[blue][bold] do you wish to save {MS_name}\'s mobile suit data y/n: ")
+        for filename in os.listdir():
+         if filename.endswith(".html"):
+               os.remove(filename)
+         else:
+                continue
+
         if save_ms_data=="y" or save_ms_data=="Y":
          os.chdir("gundam_txt_files")
          with open(f"{file_name}.txt","a") as a:
           a.write("Model Name - "+MS_name+"\n")
           for key,value in mech_info.items():
-            a.write("{d} - {e}".format(d=key,e=value)+"\n")
+             a.write("{d} - {e}".format(d=key,e=value)+"\n")
         else:
           pass
-        for filename in os.listdir():
-            if filename.endswith(".html"):
-               os.remove(filename)
-            else:
-                continue
