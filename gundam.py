@@ -83,7 +83,7 @@ elif os.path.exists("gundam_txt_files")==True:
       armanents=[]
       MS_name=info_extractor.title.string[:info_extractor.title.string.index("|")]
       for heading in info_extractor.find_all("dt"):
-        if str(heading.string).endswith("Form")==True or heading.string=="None" or str(heading.string).endswith("Type")==True or heading.string=="Television Series" or heading.string=="OVAs and ONAs" or heading.string=="Games" or heading.string=="Manga":
+        if str(heading.string).endswith("Form")==True or heading.string=="None" or str(heading.string).endswith("Type")==True or heading.string=="Television Series" or heading.string=="OVAs and ONAs" or heading.string=="Games" or heading.string=="Manga" or heading.string=="Movies":
              continue
         else:
           armanents.append(heading.string)
