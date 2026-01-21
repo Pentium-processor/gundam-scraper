@@ -92,7 +92,7 @@ elif os.path.exists("gundam_txt_files")==True:
       mech_info["Armanents"]=list(set_armanents)
       for ms_type in info_extractor.find_all("p"):
        white_space_remover=str(ms_type.string).strip()
-       if white_space_remover.endswith("Mobile Suit")==True or white_space_remover.endswith("Mobile Fighter") or white_space_remover.endswith("Mobile Worker") or white_space_remover.endswith("Mobile Armor"):
+       if white_space_remover.endswith("Mobile Suit")==True or white_space_remover.endswith("Mobile Fighter") or white_space_remover.endswith("Mobile Worker") or white_space_remover.endswith("Mobile Armor") or white_space_remover.endswith("Weapon") or white-space_remover.endswith("Craft"):
           unit_type=white_space_remover
           mech_info["Unit Type"]=unit_type
           break
